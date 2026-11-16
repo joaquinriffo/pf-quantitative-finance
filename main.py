@@ -7,7 +7,7 @@ tickers = ['IVV', 'ILF', 'SOXX'] #SP500, #LATAM, SEMICONDUCTORES
 vector_w = [0.5, 0.3, 0.2] # lista de pesos en el portafolio
 vector_w = np.array(vector_w).reshape(-1,1) # vector de pesos
 df_prices = yf.download(tickers, start='2024-01-01', end='2026-09-30')['Close']
-
+df_prices = df_prices[tickers]
 # calcular retornos diarios 
 df_ret = df_prices.pct_change().dropna()
 
@@ -20,9 +20,9 @@ w_t = w.T
 sigma = df_cov.values
 
 
-print('w', w.shape)
-print('w_t', w_t.shape)
-print('sigma', sigma.shape)
+#print('w', w.shape)
+#print('w_t', w_t.shape)
+#print('sigma', sigma.shape)
 
 varianza = np.dot(sigma, w)
 varianza = np.dot(w_t, varianza)
@@ -39,8 +39,10 @@ vector_ret = vector_ret.values
 vector_ret = vector_ret.reshape(-1,1)
 mu = np.dot(w_t, vector_ret) [0][0]
 mu_anual = mu * 252
-print(f'La media anual del portafolio es: {mu_anual*100:.04}%')
+#print(f'La media anual del portafolio es: {mu_anual*100:.04}%')
 
 # Calcular Value at Risk (VaR) al 96% de confianza
 var_95  = mu_anual - 1.64*volatilidad_anual
 print(f'La VaR anual del portafolio es: {var_95*100:.04}%')
+
+# FIRMA: P2x8QenSZcV2DQ2K0OJzqMZg_UPlt1wbvVH-sKYy_O7e_XFphFGHCgRk135KxxvjQPZga-lf4OHyRDdt3t7b8GOwyOZ_LxWK-Vij5A==
